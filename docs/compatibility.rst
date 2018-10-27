@@ -9,6 +9,6 @@ Compatibility
 kafka-python is compatible with (and tested against) broker versions 1.0
 through 0.8.0 . kafka-python is not compatible with the 0.8.2-beta release.
 
-kafka-python is tested on python 2.7, 3.4, 3.5, 3.6 and pypy.
+kafka-python is tested on python 2.7, 3.4, 3.5, 3.6, 3.7 and pypy.
 
 Builds and tests via Travis-CI.  See https://travis-ci.org/dpkp/kafka-python
