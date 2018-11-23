@@ -619,7 +619,7 @@ class CreatePartitionsResponse_v0(Response):
     API_VERSION = 0
     SCHEMA = Schema(
         ('throttle_time_ms', Int32),
-        ('topic_errors', Array(
+        ('topic_error_codes', Array(
             ('topic', String('utf-8')),
             ('error_code', Int16),
             ('error_message', String('utf-8'))))

@@ -331,8 +331,14 @@ class KafkaAdminClient(object):
         while tries:
             tries -= 1
             response = self._send_request_to_node(self._controller_id, request)
-            # DeleteTopicsResponse returns topic_error_codes rather than topic_errors
-            for topic, error_code in getattr(response, "topic_errors", response.topic_error_codes):
+            # This is a little brittle in that it assumes all responses have the
+            # same "error" attribute (topic_error_codes) and that it always
+            # unpacks into (topic, error_code) tuples.
+            # Also small py2/py3 compatibility -- py3 can ignore extra values
+            # during unpack via: for x, y, *rest in list_of_values. py2 cannot.
+            # So for now we have to map across the list and explicitly drop any
+            # extra values (ususally the error_message)
+            for topic, error_code in map(lambda e: e[:2], response.topic_error_codes):
                 error_type = Errors.for_code(error_code)
                 if tries and isinstance(error_type, NotControllerError):
                     # No need to inspect the rest of the errors for
